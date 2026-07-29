@@ -5,8 +5,10 @@ import santelecoimage from "./santeleco.jpg?inline"
 const transporter = nodemailer.createTransport({
   service: "GmailWorkspace",
   auth: {
+    type: "OAuth2",
     user: getSecret("EMAIL_ADDRESS"),
-    pass: getSecret("GOOGLE_APP_PASSWORD"),
+    clientId: getSecret("GOOGLE_CLIENT_ID"),
+    privateKey: getSecret("GOOGLE_PRIVATE_KEY"),
   },
 });
 
@@ -18,7 +20,7 @@ export async function sendMailNodeMailer(
 
   const info = await transporter.sendMail({
     to: reservaMail,
-    subject: "Prueba",
+    subject: "Reserva SanTeleco",
     html: mailContent.replace("{{{nombre_completo}}}", reservaFullName),
     text: mailTextContent.replace("{{{nombre_completo}}}", reservaFullName),
     attachments: [
