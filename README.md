@@ -22,7 +22,7 @@ All commands are run from the root of the project, from a terminal:
 | `pnpm preview`            | Preview your build locally, before deploying     |
 | `pnpm astro ...`          | Run CLI commands like `astro add`, `astro check` |
 | `pnpm astro -- --help`    | Get help using the Astro CLI                     |
-| `npx drizzle-kit push`    | Update/Generate db schema                        |
+| `pnpm exec drizzle-kit push`    | Update/Generate db schema                        |
 | `rm reservas.db`          | Removes local DB file                            |
 
 ## Styling
@@ -38,29 +38,28 @@ All commands are run from the root of the project, from a terminal:
 
 ## How to use with local database
 
-1. Go to drizzle.config.ts
-2. Change dialect from 'turso' to 'sqlite'
-3. Delete 'authToken' / Change 'authToken' for 'token'
-4. Use in .env DB_FILE_NAME=file:reservas.db
+1. Add to .env LOCAL=true
+2. Add to .env DB_FILE_NAME=file:reservas.db
 
-Now you should use `npx drizzle-kit push` to create the initial database schema
+Now you should use `pnpm exec drizzle-kit push` to create the initial database schema
 
 ## How to use with Turso cloud database
 
 By default the project uses turso for the database but you need to do some steps to configure it:
 
 1. Create turso account and new database
+2. Add to .env LOCAL=false
 2. Add to .env DB_FILE_NAME=<turso_url>
 3. Add to .env DB_TOKEN=<turso_token>
 
-Now you should use `npx drizzle-kit push` to create the initial database schema
+Now you should use `pnpm exec drizzle-kit push` to create the initial database schema
 
 ## How to be able to submit forms
 
 1. Generate custom secret: openssl rand -base64 48
 2. Add secret to .env HMAC_KEY=<secret>
 
-## How to be able to send emails
+## How to be able to send cloud emails
 
 1. Create a resend account
 2. Create template named "reservation-confirmation" with variable "nombre_completo" and \<img src="cid:qr" \/> for the QR code
@@ -68,6 +67,11 @@ Now you should use `npx drizzle-kit push` to create the initial database schema
 4. Add secret api key to .env RESEND_API_KEY=<api_key>
 5. Add email address to .env EMAIL_ADDRESS=<email_address> (the address must be in the custom domain added)
 
+## How to be able to send Gmail Workspace emails
+
+1. Add to .env GOOGLE_CLIENT_ID=<GOOGLE_CLIENT_ID>
+2. Add to .env GOOGLE_PRIVATE_KEY=<GOOGLE_PRIVATE_KEY>
+3. Add email address to .env EMAIL_ADDRESS=<email_address> (the address must be in the custom domain of the workspace)
 ### Example .env file
 
 ```env
