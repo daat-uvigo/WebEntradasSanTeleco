@@ -1,0 +1,27 @@
+---
+import type { AstroComponentFactory } from "astro/runtime/server/index.js";
+import MainLayout from "../layouts/MainLayout.astro";
+
+interface Props {
+  MD: AstroComponentFactory
+}
+
+const {MD} = Astro.props 
+---
+
+<MainLayout>
+    <div id="content" class="text-white text-pretty">
+        <MD />
+    </div>
+</MainLayout>
+
+<style>
+    #content {
+        h1,h2,h3,h4,h5,h6 {
+            all: revert;
+        }
+        ul, li {
+            all:revert;
+        }
+    }
+</style>

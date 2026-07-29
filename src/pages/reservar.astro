@@ -16,7 +16,7 @@ import MainLayout from "../layouts/MainLayout.astro";
 
         <div>
             <label class="block text-sm font-medium text-white" for="full_name">
-                Nombre completo
+                Nombre completo*
             </label>
 
             <input
@@ -24,13 +24,14 @@ import MainLayout from "../layouts/MainLayout.astro";
                 class="mt-1 w-full p-3 rounded-lg focus:border-indigo-500 focus:outline-none border-gray-600 bg-gray-900 text-white"
                 id="full_name"
                 type="text"
+                required
                 placeholder="Nombre Apellido Apellido"
             />
         </div>
 
         <div>
             <label class="block text-sm font-medium text-white" for="email">
-                Correo electrónico
+                Correo electrónico*
             </label>
 
             <input
@@ -38,8 +39,19 @@ import MainLayout from "../layouts/MainLayout.astro";
                 class="mt-1 w-full p-3 rounded-lg focus:border-indigo-500 focus:outline-none border-gray-600 bg-gray-900 text-white"
                 id="email"
                 type="email"
+                required
                 placeholder="ejemplo@gmail.com"
             />
+
+        </div>
+
+        <div class="flex flex-row gap-3">
+            <label class="block text-sm font-medium text-white" for="email">
+                He leído y acepto la
+                <a href="/politica-de-privacidad" class="underline">Politica de privacidad</a>
+            </label>
+
+            <input type="checkbox" required>
         </div>
         
         <div class="hidden">
