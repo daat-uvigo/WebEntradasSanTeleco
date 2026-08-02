@@ -6,7 +6,7 @@ import MainLayout from "../layouts/MainLayout.astro"
     <div class="space-y-4">
       <details class="group [&amp;_summary::-webkit-details-marker]:hidden">
         <summary class="flex items-center justify-between gap-1.5 rounded-md border p-4 border-gray-700 bg-gray-800 text-white">
-          <h2 class="text-lg font-medium">¿Como puedo reservar mi entrada?</h2>
+          <h2 class="text-lg font-medium">¿Cómo puedo reservar mi entrada?</h2>
     
           <svg class="size-5 shrink-0 transition-transform duration-300 group-open:-rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
@@ -14,15 +14,19 @@ import MainLayout from "../layouts/MainLayout.astro"
         </summary>
     
         <p class="px-4 pt-4 text-white">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ab hic veritatis molestias culpa
-          in, recusandae laboriosam neque aliquid libero nesciunt voluptate dicta quo officiis
-          explicabo consequuntur distinctio corporis earum similique!
+          Reservar tu entrada es rápido y muy sencillo. Solo tienes que seguir estos sencillos pasos:<br><br>
+
+          <strong>1. Introduce tus datos:</strong> Rellena el formulario. <em>(¡Revisa bien que tu email esté escrito correctamente!)</em>.<br>
+          <strong>2. Selecciona tus entradas.</strong><br>
+          <strong>3. ¡Todo listo!</strong> Recibirás un correo de confirmación con tu código QR.<br><br>
+
+          <span class="text-sm opacity-80">¿No has recibido el correo? Revisa tu carpeta de Spam o contáctanos a contacto@daat.uvigo.es.</span>
         </p>
       </details>
     
       <details class="group [&amp;_summary::-webkit-details-marker]:hidden">
         <summary class="flex items-center justify-between gap-1.5 rounded-md border p-4 border-gray-700 bg-gray-800 text-white">
-          <h2 class="text-lg font-medium">¿Donce se celebra la fiesta?</h2>
+          <h2 class="text-lg font-medium">¿Dónde se celebra la fiesta?</h2>
     
           <svg class="size-5 shrink-0 transition-transform duration-300 group-open:-rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
@@ -30,15 +34,22 @@ import MainLayout from "../layouts/MainLayout.astro"
         </summary>
     
         <p class="px-4 pt-4 text-white">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ab hic veritatis molestias culpa
-          in, recusandae laboriosam neque aliquid libero nesciunt voluptate dicta quo officiis
-          explicabo consequuntur distinctio corporis earum similique!
+          Como manda la tradición, este año volveremos a celebrar la fiesta en nuestro lugar de siempre:<br>
+          <strong>Parking de la Escuela de Telecomunicaciones</strong>; Rúa Maxwell s/n (Campus Universitario).
+
         </p>
+        <a 
+          href="https://maps.app.goo.gl/ixSzMeh5MVAv7Qd1A" 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          class="inline-block mt-2 text-indigo-400 underline opacity-90 hover:opacity-100 transition-opacity" >
+          Abrir ubicación en Google Maps &rarr;
+        </a>
       </details>
     
       <details class="group [&amp;_summary::-webkit-details-marker]:hidden">
         <summary class="flex items-center justify-between gap-1.5 rounded-md border p-4 border-gray-700 bg-gray-800 text-white">
-          <h2 class="text-lg font-medium">¿Quien puede ir?</h2>
+          <h2 class="text-lg font-medium">¿Quién puede ir?</h2>
     
           <svg class="size-5 shrink-0 transition-transform duration-300 group-open:-rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
@@ -46,9 +57,7 @@ import MainLayout from "../layouts/MainLayout.astro"
         </summary>
     
         <p class="px-4 pt-4 text-white">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ab hic veritatis molestias culpa
-          in, recusandae laboriosam neque aliquid libero nesciunt voluptate dicta quo officiis
-          explicabo consequuntur distinctio corporis earum similique!
+          El único requisito indispensable para acceder al recinto es ser <strong>mayor de edad (+18)</strong>.
         </p>
       </details>
     </div>
