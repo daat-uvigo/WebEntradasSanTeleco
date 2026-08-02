@@ -26,3 +26,5 @@ pnpm-debug.log*
 # sqlite db
 reservas.db
 .vercel
+
+fotos*
