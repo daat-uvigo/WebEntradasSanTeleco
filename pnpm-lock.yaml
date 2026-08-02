@@ -38,6 +38,9 @@ importers:
       drizzle-zod:
         specifier: 0.8.3
         version: 0.8.3(drizzle-orm@0.45.1(@libsql/client@0.17.0)(@types/better-sqlite3@7.6.13)(better-sqlite3@12.6.2))(zod@4.3.6)
+      embla-carousel:
+        specifier: ^8.6.0
+        version: 8.6.0
       nodemailer:
         specifier: 8.0.3
         version: 8.0.3
@@ -1700,6 +1703,9 @@ packages:
 
   ee-first@1.1.1:
     resolution: {integrity: sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==}
+
+  embla-carousel@8.6.0:
+    resolution: {integrity: sha512-SjWyZBHJPbqxHOzckOfo8lHisEaJWmwd23XppYFYVh10bU66/Pn5tkVkbkCMZVdbUE5eTCI2nD8OyIP4Z+uwkA==}
 
   emoji-regex@8.0.0:
     resolution: {integrity: sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==}
@@ -4167,6 +4173,8 @@ snapshots:
   dset@3.1.4: {}
 
   ee-first@1.1.1: {}
+
+  embla-carousel@8.6.0: {}
 
   emoji-regex@8.0.0: {}
 
