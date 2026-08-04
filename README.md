@@ -69,16 +69,21 @@ Now you should use `pnpm exec drizzle-kit push` to create the initial database s
 
 ## How to be able to send Gmail Workspace emails
 
-1. Add to .env GOOGLE_CLIENT_ID=<GOOGLE_CLIENT_ID>
-2. Add to .env GOOGLE_PRIVATE_KEY=<GOOGLE_PRIVATE_KEY>
+1. Add to .env LOCAL=true
+2. Add to .env GOOGLE_APP_PASSWORD=<GOOGLE_APP_PASSWORD> (https://myaccount.google.com/apppasswords)
 3. Add email address to .env EMAIL_ADDRESS=<email_address> (the address must be in the custom domain of the workspace)
 ### Example .env file
 
 ```env
+# For Gmail & SQLite (else RESEND & TURSO)
 LOCAL=true
 DB_FILE_NAME=file:reservas.db
 DB_TOKEN=xxx
 HMAC_KEY=B78T0uXf+PxvGBEUoGSXWL0d+98bwRasOR0wyj14LvhMHTU3dyIGO3m4uMLrlyTu
+
 EMAIL_ADDRESS=santeleco@daat.uvigo.es
+# Gmail
+GOOGLE_APP_PASSWORD=xxx
+# Resend
 RESEND_API_KEY=re_xxx
 ``` 

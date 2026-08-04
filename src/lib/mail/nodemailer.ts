@@ -1,14 +1,16 @@
 import { getSecret } from "astro:env/server";
 import nodemailer from "nodemailer"
-import santelecoimage from "./santeleco.jpg?inline"
+//@ts-ignore
+import santelecoimage_hex from "./santeleco.jpg?raw-hex"
+
+const santelecoimage = Buffer.from(santelecoimage_hex, 'hex')
 
 const transporter = nodemailer.createTransport({
   service: "GmailWorkspace",
+  requireTLS: true,
   auth: {
-    type: "OAuth2",
     user: getSecret("EMAIL_ADDRESS"),
-    clientId: getSecret("GOOGLE_CLIENT_ID"),
-    privateKey: getSecret("GOOGLE_PRIVATE_KEY"),
+    pass: getSecret("GOOGLE_APP_PASSWORD")
   },
 });
 
@@ -19,6 +21,7 @@ export async function sendMailNodeMailer(
 ) {
 
   const info = await transporter.sendMail({
+    from: getSecret("EMAIL_ADDRESS"),
     to: reservaMail,
     subject: "Reserva SanTeleco",
     html: mailContent.replace("{{{nombre_completo}}}", reservaFullName),
