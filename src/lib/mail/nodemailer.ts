@@ -8,6 +8,7 @@ const santelecoimage = Buffer.from(santelecoimage_hex, 'hex')
 const transporter = nodemailer.createTransport({
   service: "GmailWorkspace",
   requireTLS: true,
+  name: "santeleco.uvigo.es",
   auth: {
     user: getSecret("EMAIL_ADDRESS"),
     pass: getSecret("GOOGLE_APP_PASSWORD")
