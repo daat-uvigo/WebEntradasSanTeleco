@@ -1,0 +1,82 @@
+---
+
+import { Image } from "astro:assets"
+import "atropos/atropos.min.css"
+import camisetaFrontal from "./camiseta-frontal.png"
+import camisetaReverso from "./camiseta-reverso.png"
+
+---
+
+<script>
+
+import Atropos from 'atropos';
+
+function initAtropos() {
+  // Initialize
+  Atropos({
+    el: '.camiseta-frontal',
+    shadow: false,
+    highlight: false
+    // rest of parameters
+  });
+
+  Atropos({
+    el: '.camiseta-reverso',
+    shadow: false,
+    highlight: false
+    // rest of parameters
+  });
+}
+
+initAtropos()
+
+document.addEventListener("astro:after-swap", initAtropos);
+
+</script>
+
+<div class="flex flex-row gap-0">
+    <div class="atropos camiseta-frontal mx-auto py-12 rounded-2xl" data-height={camisetaFrontal.height} data-width={camisetaFrontal.width}>
+      <!-- scale container (required) -->
+      <div class="atropos-scale">
+        <!-- rotate container (required) -->
+        <div class="atropos-rotate">
+          <!-- inner container (required) -->
+          <div class="atropos-inner rounded-2xl mx-auto">
+            <!-- put your custom content here -->
+            <Image src={camisetaFrontal} alt="camiseta santeleco actual frontal" />
+            <!-- <Image src={santelecoLogo} alt="logo de santeleco" data-atropos-offset="5"  /> -->
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="atropos camiseta-reverso mx-auto py-12 rounded-2xl" data-height={camisetaReverso.height} data-width={camisetaReverso.width}>
+      <!-- scale container (required) -->
+      <div class="atropos-scale">
+        <!-- rotate container (required) -->
+        <div class="atropos-rotate">
+          <!-- inner container (required) -->
+          <div class="atropos-inner rounded-2xl mx-auto">
+            <!-- put your custom content here -->
+            <Image src={camisetaReverso} alt="camiseta santeleco actual reverso" />
+            <!-- <Image src={santelecoLogo} alt="logo de santeleco" data-atropos-offset="5"  /> -->
+            
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+<style>
+.camiseta-frontal {
+  width: 480px;
+  height: attr(data-height px)
+}
+
+.camiseta-reverso {
+  width: 480px;
+  height: attr(data-height px)
+}
+
+</style>

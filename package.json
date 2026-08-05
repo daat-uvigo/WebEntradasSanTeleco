@@ -18,6 +18,7 @@
     "altcha": "2.3.0",
     "altcha-lib": "1.4.1",
     "astro": "6.0.6",
+    "atropos": "2.0.2",
     "dotenv": "17.2.3",
     "drizzle-orm": "0.45.1",
     "drizzle-zod": "0.8.3",
