@@ -1,9 +1,11 @@
 
 HMAC_KEY=$(openssl rand -base64 48)
+SECRET_KEY=$(openssl rand -base64 48)
 
 FILE="
 LOCAL=true
 HMAC_KEY=$HMAC_KEY
+SECRET_KEY=$SECRET_KEY
 
 # DB
 DB_FILE_NAME=file:reservas.db

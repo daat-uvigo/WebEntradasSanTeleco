@@ -46,3 +46,7 @@ export async function GetReservaByIdAndEmailHash(id: string, emailHash: string) 
 export async function DeleteReserva(id: string) {
   return await db.delete(reservasTable).where(eq(reservasTable.id, id))
 }
+
+export async function BuyReserva(id: string, emailHash: string) {
+  return await db.update(reservasTable).set({verified: true}).where(and(eq(reservasTable.id, id), eq(reservasTable.emailHash, emailHash))).returning()
+}

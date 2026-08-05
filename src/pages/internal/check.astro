@@ -31,7 +31,8 @@ async function scanQr() {
         })
         
         if (!res.ok) {
-          throw new Error()
+          resultElement.innerText = "No hay reserva"
+          return
         }
         
         const resData = await res.json() as {
@@ -39,20 +40,15 @@ async function scanQr() {
            full_name: string;
            verified: boolean | null;
            emailHash: string;
-       }[]
-                
-        if (resData?.length === 0) {
-          resultElement.innerText = "No hay reserva"
-          return
-        }
+        }      
         
-        if (!resData[0].verified) {
-          resultElement.innerText = "Reservada"
+        if (!resData.verified) {
+          resultElement.innerText = `Reservada: ${resData.full_name} \n(${id})`
           currentUser.id = id
           currentUser.emailHash = email_hash
           buyBtn.classList.remove("hidden")
         } else {
-          resultElement.innerText = "Comprada"
+          resultElement.innerText = `Comprada: ${resData.full_name} \n(${id})`
         }
         
       } catch {
@@ -69,7 +65,28 @@ async function scanQr() {
 }
 
 async function buy() {
+  try {
+    const url = new URL(window.location.href);
+    const query = new URLSearchParams(url.searchParams)
   
+    const secret_key = query.get("secret_key")
+
+    alert(secret_key)
+    
+    const { id, emailHash } = currentUser
+    
+    const res = await fetch(`/api/internal/check?id=${encodeURI(id!)}&email_hash=${encodeURI(emailHash!)}&secret_key=${secret_key}`, {
+      method: "PATCH"
+    })
+  
+    if (!res.ok) {
+      throw new Error()
+    }
+
+    resultElement.innerHTML = "Comprada con exito"
+  } catch {
+    resultElement.innerText = "Hubo un error en el proceso de compra"
+  }
 }
 
 scanBtn.addEventListener("click", scanQr)
@@ -79,7 +96,10 @@ buyBtn.addEventListener("click", buy)
 
 <MainLayout>
     <div class="flex flex-col gap-4">
-        <p class="text-white">Resultado: <span id="result"></span></p>
+        <h2 class="text-white text-xl">
+            Resultado
+        </h2>
+        <span class="h-10 text-white" id="result"></span>
         
         <div class="flex flex-row">
             <button id="scan-btn" class="rounded-md bg-indigo-600 px-5 py-2.5 text-sm font-medium text-white shadow-sm dark:hover:bg-indigo-700">
