@@ -1,5 +1,6 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro"
+import CarouselAstroComponent from "../components/Carousel/carousel.astro"
 ---
 
 <script>
@@ -39,21 +40,24 @@ import MainLayout from "../layouts/MainLayout.astro"
                 Reservar
             </a>
 
-            <a class="inline-block rounded border border-cyan-500 bg-cyan-500 px-5 py-3 font-medium text-white shadow-sm transition-colors hover:bg-cyan-700" href="/carousel">
-                Fotos
-            </a>
-
             <a class="inline-block rounded border px-5 py-3 font-medium shadow-sm transition-colors 0 border-gray-700 text-gray-200 hover:bg-gray-800 hover:text-white" href="/faq">
                 FAQ 
             </a>
           </div>
         </section>
+        
         <section>
             <h3 class="pt-12 subtitle text-center mt-4 text-pretty text-4xl text-gray-200 underline">Partners</h3>
             <div id="partners" class="pt-6 *:rounded *:shadow-xl *:shadow-indigo-800 *:ring-4 *:ring-indigo-800 *:p-0.5 *:bg-indigo-800">
                 
             </div>
         </section>
+
+        <section>
+          <h3 class="pt-12 subtitle text-center mt-4 text-pretty text-4xl text-gray-200 underline">Fotos</h3>
+          <CarouselAstroComponent></CarouselAstroComponent>
+        </section> 
+
 </MainLayout>
 
 <style>

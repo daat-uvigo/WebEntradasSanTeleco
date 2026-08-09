@@ -3,7 +3,7 @@ import { setupTweenOpacity } from './EmblaCarouselTweenOpacity'
 import { addDotButtonAndClickHandlers } from './EmblaCarouselDotButton'
 import { addPrevNextButtonClickHandlers } from './EmblaCarouselArrowButtons'
 import { setupLazyLoadImage } from './EmblaCarouselLazyLoad'
-import '../styles/global.css'
+import './embla.css'
 
 const OPTIONS = { loop: true }
 
