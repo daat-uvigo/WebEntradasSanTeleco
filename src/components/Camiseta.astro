@@ -14,14 +14,14 @@ import Atropos from 'atropos';
 function initAtropos() {
   // Initialize
   Atropos({
-    el: '.camiseta-frontal',
+    el: '#camiseta-frontal',
     shadow: false,
     highlight: false
     // rest of parameters
   });
 
   Atropos({
-    el: '.camiseta-reverso',
+    el: '#camiseta-reverso',
     shadow: false,
     highlight: false
     // rest of parameters
@@ -34,8 +34,8 @@ document.addEventListener("astro:after-swap", initAtropos);
 
 </script>
 
-<div class="flex flex-row gap-0">
-    <div class="atropos camiseta-frontal mx-auto py-12 rounded-2xl" data-height={camisetaFrontal.height} data-width={camisetaFrontal.width}>
+<section class="flex flex-col md:flex-row md:gap-3 p-6">
+    <div class="atropos mx-auto py-12 rounded-2xl" id="camiseta-frontal" data-height={camisetaFrontal.height} data-width={camisetaFrontal.width}>
       <!-- scale container (required) -->
       <div class="atropos-scale">
         <!-- rotate container (required) -->
@@ -43,15 +43,13 @@ document.addEventListener("astro:after-swap", initAtropos);
           <!-- inner container (required) -->
           <div class="atropos-inner rounded-2xl mx-auto">
             <!-- put your custom content here -->
-            <Image src={camisetaFrontal} alt="camiseta santeleco actual frontal" />
-            <!-- <Image src={santelecoLogo} alt="logo de santeleco" data-atropos-offset="5"  /> -->
-            
+            <Image src={camisetaFrontal} alt="camiseta santeleco actual frontal" />            
           </div>
         </div>
       </div>
     </div>
     
-    <div class="atropos camiseta-reverso mx-auto py-12 rounded-2xl" data-height={camisetaReverso.height} data-width={camisetaReverso.width}>
+    <div class="atropos camiseta mx-auto py-12 rounded-2xl" id="camiseta-reverso" data-height={camisetaReverso.height} data-width={camisetaReverso.width}>
       <!-- scale container (required) -->
       <div class="atropos-scale">
         <!-- rotate container (required) -->
@@ -60,23 +58,20 @@ document.addEventListener("astro:after-swap", initAtropos);
           <div class="atropos-inner rounded-2xl mx-auto">
             <!-- put your custom content here -->
             <Image src={camisetaReverso} alt="camiseta santeleco actual reverso" />
-            <!-- <Image src={santelecoLogo} alt="logo de santeleco" data-atropos-offset="5"  /> -->
             
           </div>
         </div>
       </div>
     </div>
-</div>
+</section>
 
 <style>
-.camiseta-frontal {
-  width: 480px;
-  height: attr(data-height px)
-}
 
-.camiseta-reverso {
-  width: 480px;
-  height: attr(data-height px)
+@reference "tailwindcss"
+
+.camiseta {
+    @apply md:w-120;
+    height: attr(data-height px)
 }
 
 </style>
