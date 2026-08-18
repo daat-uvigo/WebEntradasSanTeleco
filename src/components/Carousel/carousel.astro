@@ -1,5 +1,10 @@
 <script>
-
+    import EmblaCarousel from 'embla-carousel'
+    import { setupTweenOpacity } from './EmblaCarouselTweenOpacity'
+    import { addDotButtonAndClickHandlers } from './EmblaCarouselDotButton'
+    import { addPrevNextButtonClickHandlers } from './EmblaCarouselArrowButtons'
+    import { setupLazyLoadImage } from './EmblaCarouselLazyLoad'
+    import './embla.css'
     import { getPhotos } from "../../lib/pb/Photos";
 
     async function loadPhotos() {
@@ -10,14 +15,38 @@
         photos.forEach(p => {
             const imgElement = document.createElement("img")
 
-            imgElement.src = p.img
+            imgElement.className = "embla__slide__img embla__lazy-load__img"
+            imgElement.dataset.src = p.img
 
             const emblaSlide = document.createElement("div")
             emblaSlide.className = "embla__slide embla__lazy-load"
+            const emblaSpinner = document.createElement("span")
+            emblaSpinner.className = "embla__lazy-load__spinner"
+
+            emblaSlide.appendChild(emblaSpinner)
             emblaSlide.appendChild(imgElement)
 
             emblaContainerDiv.appendChild(emblaSlide)
         })
+
+        const OPTIONS = { loop: true }
+
+        const emblaNode = document.querySelector('.embla')
+        const viewportNode = emblaNode.querySelector('.embla__viewport')
+        const prevBtn = emblaNode.querySelector('.embla__button--prev')
+        const nextBtn = emblaNode.querySelector('.embla__button--next')
+        const dotsNode = document.querySelector('.embla__dots')
+
+        const emblaApi = EmblaCarousel(viewportNode, OPTIONS)
+
+        const loadImagesInView = setupLazyLoadImage(emblaApi)
+
+        setupTweenOpacity(emblaApi)
+        addPrevNextButtonClickHandlers(emblaApi, prevBtn, nextBtn)
+        addDotButtonAndClickHandlers(emblaApi, dotsNode)
+
+        loadImagesInView(emblaApi)
+        emblaApi.on('reInit', loadImagesInView).on('slidesInView', loadImagesInView)
     }
 
     loadPhotos()
@@ -71,7 +100,6 @@
     </div>
 </section>
 
-<script src = ./index.js></script>
 <styles href = ./embla.css></styles>
 
 <style>
