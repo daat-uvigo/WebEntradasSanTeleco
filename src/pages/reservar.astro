@@ -1,5 +1,9 @@
 ---
+import { getRelativeLocaleUrl } from "astro:i18n";
 import MainLayout from "../layouts/MainLayout.astro";
+import { getTranslations } from "../i18n/translations";
+
+const t = getTranslations(Astro.currentLocale || "es");
 ---
 
 <script>
@@ -16,7 +20,7 @@ import MainLayout from "../layouts/MainLayout.astro";
 
         <div>
             <label class="block text-sm font-medium text-white" for="full_name">
-                Nombre completo*
+                {t.fullName}
             </label>
 
             <input
@@ -31,7 +35,7 @@ import MainLayout from "../layouts/MainLayout.astro";
 
         <div>
             <label class="block text-sm font-medium text-white" for="email">
-                Correo electrónico*
+                {t.email}
             </label>
 
             <input
@@ -47,8 +51,8 @@ import MainLayout from "../layouts/MainLayout.astro";
 
         <div class="flex flex-row gap-3">
             <label class="block text-sm font-medium text-white" for="email">
-                He leído y acepto la
-                <a href="/politica-de-privacidad" class="underline">Politica de privacidad</a>
+                {t.privacyConsent}
+                <a href={getRelativeLocaleUrl(Astro.currentLocale || "es", "politica-de-privacidad")} class="underline">{t.privacyPolicy}</a>
             </label>
 
             <input type="checkbox" required class="accent-indigo-600">
@@ -62,7 +66,7 @@ import MainLayout from "../layouts/MainLayout.astro";
             class="block w-full rounded-lg border border-indigo-600 bg-indigo-600 px-12 py-3 text-sm font-medium text-white transition-colors hover:bg-indigo-700 hover:text-white"
             type="submit"
         >
-            Pedir reserva
+            {t.reserveButton}
         </button>
     </form>
 </MainLayout>

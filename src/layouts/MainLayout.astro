@@ -2,9 +2,34 @@
   import "../styles/global.css";
   
   import { ClientRouter } from "astro:transitions";
+
+  import { getRelativeLocaleUrl } from "astro:i18n";
+  import { getTranslations } from "../i18n/translations";
+
+  const localeFromPath = Astro.url.pathname.match(/^\/(es|gl|en)(?:\/|$)/)?.[1] ?? "es";
+  const currentLang = Astro.currentLocale ?? localeFromPath;
+  const t = getTranslations(currentLang);
+
+  const languages = {
+    es: "ES",
+    gl: "GL",
+    en: "EN",
+  };
+
+  const currentPath = Astro.url.pathname;
+  function getTranslatedPath(targetLang: string) {
+    const normalizedPath = currentPath.replace(/^\/(es|gl|en)(?=\/|$)/, "") || "/";
+    const cleanedPath = normalizedPath === "/" ? "/" : normalizedPath.replace(/^\/+|\/+$/g, "");
+
+    if (cleanedPath === "/") {
+      return getRelativeLocaleUrl(targetLang, "/");
+    }
+
+    return getRelativeLocaleUrl(targetLang, cleanedPath);
+  }
 ---
 
-<html lang="es">
+<html lang={currentLang}>
     <head>
         <meta charset="utf-8" />
         <link rel="icon" href="/favicon.ico" />
@@ -16,13 +41,13 @@
     </head>
     <body>
 
-        <header class="bg-gray-900 pt-3" transition:persist>
+        <header class="bg-gray-900 pt-3">
             <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <div class="flex h-16 items-center justify-between">
                     <div class="flex-1 md:flex md:items-center md:gap-12">
                         <a
                             class="block text-indigo-800"
-                            href="/"
+                            href={getRelativeLocaleUrl(currentLang, "/")}
                         >
                             <span class="sr-only">Home</span>
                             <img class="h-12" height="48px" src="/santeleco.jpg" alt="">
@@ -31,13 +56,32 @@
         
                     <div class="md:flex md:items-center md:gap-12">
                         <nav aria-label="Global" class="hidden md:block">
-                            <ul class="flex items-center gap-6 text-sm">
+                            <ul class="flex items-center gap-4 text-sm">
+                                <li>
+                                    <div class="flex items-center gap-1 rounded-full border border-gray-700 bg-gray-800/60 p-1">
+                                        {Object.entries(languages).map(([code, label]) => (
+                                            <a
+                                                class:list={[
+                                                    "rounded-full px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide transition-colors",
+                                                    code === currentLang
+                                                        ? "bg-indigo-600 text-white"
+                                                        : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                                                ]}
+                                                href={getTranslatedPath(code)}
+                                                aria-label={`Cambiar idioma a ${label}`}
+                                                hreflang={code}
+                                            >
+                                                {label}
+                                            </a>
+                                        ))}
+                                    </div>
+                                </li>
                                 <li>
                                     <a
                                         class=" transition text-white hover:text-white/75"
-                                        href="/faq"
+                                        href={getRelativeLocaleUrl(currentLang, "faq")}
                                     >
-                                        FAQ
+                                        {t.faq}
                                     </a>
                                 </li>
                             </ul>
@@ -47,9 +91,9 @@
                             <div class="sm:flex sm:gap-4">
                                 <a
                                     class="rounded-md bg-indigo-600 px-5 py-2.5 text-sm font-medium text-white shadow-sm dark:hover:bg-indigo-700"
-                                    href="/reservar"
+                                    href={getRelativeLocaleUrl(currentLang, "reservar")}
                                 >
-                                    Reservar
+                                    {t.reserve}
                                 </a>
                             </div>
                         </div>

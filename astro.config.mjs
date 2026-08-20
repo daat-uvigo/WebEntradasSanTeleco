@@ -37,5 +37,14 @@ const adapter = async function() {
 export default defineConfig({
   vite: { plugins: [hexLoader ,tailwindcss()] },
   adapter: await adapter(),
-  site: "https://santeleco.uvigo.es"
+  site: "https://santeleco.uvigo.es",
+  
+  // Native i18n Configuration
+  i18n: {
+    defaultLocale: "es",
+    locales: ["es", "gl", "en"],
+    routing: {
+      prefixDefaultLocale: false,
+    }
+  }
 });

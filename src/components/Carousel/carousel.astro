@@ -1,3 +1,9 @@
+---
+import { getTranslations } from "../../i18n/translations";
+
+const t = getTranslations(Astro.currentLocale || "es");
+---
+
 <script>
     import EmblaCarousel from 'embla-carousel'
     import { setupTweenOpacity } from './EmblaCarouselTweenOpacity'
@@ -59,7 +65,7 @@
     <h3 
         class="pt-12 subtitle text-center mt-4 text-pretty text-4xl text-gray-200 underline"
     >
-        Fotos
+        {t.photos}
     </h3>
     <div class="embla text-white">
         <div class="embla__viewport">

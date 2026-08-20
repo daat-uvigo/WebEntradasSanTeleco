@@ -1,0 +1,36 @@
+---
+import HomePage from "../index.astro";
+import FaqPage from "../faq.astro";
+import ReservarPage from "../reservar.astro";
+import PoliticaPrivacidadePage from "../politica-de-privacidad.astro";
+import ReservadoPage from "../reservado.astro";
+import FalloReservaPage from "../fallo-reserva.astro";
+
+const localeMap = {
+  "": HomePage,
+  "faq": FaqPage,
+  "reservar": ReservarPage,
+  "politica-de-privacidad": PoliticaPrivacidadePage,
+  "reservado": ReservadoPage,
+  "fallo-reserva": FalloReservaPage,
+} as const;
+
+export function getStaticPaths() {
+  const locales = ["es", "gl", "en"];
+  const pageSlugs = ["", "faq", "reservar", "politica-de-privacidad", "reservado", "fallo-reserva"];
+
+  return locales.flatMap((lang) =>
+    pageSlugs.map((slug) => ({
+      params: {
+        lang,
+        slug: slug || undefined,
+      },
+    })),
+  );
+}
+
+const slug = Astro.params.slug ?? "";
+const Page = localeMap[slug as keyof typeof localeMap] ?? HomePage;
+---
+
+<Page />
