@@ -7,7 +7,6 @@ const t = getTranslations(Astro.currentLocale || "es");
 <script>
     import EmblaCarousel from 'embla-carousel'
     import { setupTweenOpacity } from './EmblaCarouselTweenOpacity'
-    import { addDotButtonAndClickHandlers } from './EmblaCarouselDotButton'
     import { addPrevNextButtonClickHandlers } from './EmblaCarouselArrowButtons'
     import { setupLazyLoadImage } from './EmblaCarouselLazyLoad'
     import './embla.css'
@@ -15,7 +14,8 @@ const t = getTranslations(Astro.currentLocale || "es");
 
     async function loadPhotos() {
         const emblaContainerDiv = document.getElementsByClassName("embla__container")[0] as HTMLDivElement
-
+        if (!emblaContainerDiv) return
+        
         const photos = await getPhotos()
 
         photos.forEach(p => {
@@ -37,11 +37,10 @@ const t = getTranslations(Astro.currentLocale || "es");
 
         const OPTIONS = { loop: true }
 
-        const emblaNode = document.querySelector('.embla')
-        const viewportNode = emblaNode.querySelector('.embla__viewport')
-        const prevBtn = emblaNode.querySelector('.embla__button--prev')
-        const nextBtn = emblaNode.querySelector('.embla__button--next')
-        const dotsNode = document.querySelector('.embla__dots')
+        const emblaNode = document.querySelector('.embla') as HTMLElement
+        const viewportNode = emblaNode?.querySelector('.embla__viewport') as HTMLElement
+        const prevBtn = emblaNode?.querySelector('.embla__button--prev')
+        const nextBtn = emblaNode?.querySelector('.embla__button--next')
 
         const emblaApi = EmblaCarousel(viewportNode, OPTIONS)
 
@@ -49,7 +48,6 @@ const t = getTranslations(Astro.currentLocale || "es");
 
         setupTweenOpacity(emblaApi)
         addPrevNextButtonClickHandlers(emblaApi, prevBtn, nextBtn)
-        addDotButtonAndClickHandlers(emblaApi, dotsNode)
 
         loadImagesInView(emblaApi)
         emblaApi.on('reInit', loadImagesInView).on('slidesInView', loadImagesInView)
@@ -67,15 +65,10 @@ const t = getTranslations(Astro.currentLocale || "es");
     >
         {t.photos}
     </h3>
-    <div class="embla text-white">
+    <div class="embla text-white py-10">
         <div class="embla__viewport">
 
-            <div
-                class="embla__container"
-                class="pt-6 *:rounded *:shadow-xl *:shadow-indigo-800 *:ring-4 *:ring-indigo-800 *:p-0.5 *:bg-indigo-800"
-            >
-            </div>
-
+            <div class="embla__container"></div>
             <div class="embla__controls">
                 <div class="embla__buttons">
                 <button
@@ -100,7 +93,7 @@ const t = getTranslations(Astro.currentLocale || "es");
                     </svg>
                 </button>
                 </div>
-                <div class="embla__dots rounded border border-yellow-600"></div>
+                <!-- <div class="embla__dots rounded border border-yellow-600"></div> -->
             </div>
         </div>
     </div>

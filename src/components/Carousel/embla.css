@@ -1,3 +1,5 @@
+@reference "tailwindcss";
+
 .embla {
   max-width: 48rem;
   margin: auto;
@@ -30,6 +32,7 @@
   width: 100%;
   object-fit: cover;
   border-radius: 1.8rem;
+  @apply rounded-xl shadow-lg shadow-indigo-600;
 }
 
 .embla__controls {
