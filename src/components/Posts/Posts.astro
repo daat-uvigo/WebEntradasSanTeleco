@@ -1,0 +1,56 @@
+<script>
+
+  import { getPosts } from "../../lib/pb/Posts"
+  
+  async function loadPosts() {
+    const partnersDiv = document.getElementById("posts") as HTMLDivElement
+    
+    const posts = await getPosts()
+  
+    posts.forEach(p => {
+      console.log(p)
+      const link = document.createElement("a")
+      link.href = p.url
+      
+      const imgElement = document.createElement("img")
+      imgElement.src = p.img
+
+      link.appendChild(imgElement)
+      partnersDiv.appendChild(link)
+    })
+  }
+
+  loadPosts()
+
+  document.addEventListener("astro:after-swap", loadPosts);
+</script>
+
+<section>
+    <h3
+        class="pt-12 subtitle text-center mt-4 text-pretty text-4xl text-gray-200 underline"
+    >
+        Info
+    </h3>
+    <div
+        id="posts"
+        class="pt-6 *:rounded *:shadow-xl *:shadow-indigo-800"
+    >
+    </div>
+</section>
+
+<style>
+
+    #posts {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);   
+        
+        @media (width >= 48rem) {
+            grid-template-columns: repeat(3, 1fr);   
+        }
+        gap: 1rem;
+        justify-content: center;
+        align-items: center;
+        justify-items: center;
+    }
+
+</style>

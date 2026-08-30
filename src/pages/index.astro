@@ -4,6 +4,7 @@ import CarouselAstroComponent from "../components/Carousel/carousel.astro"
 import Partners from "../components/Partners/Partners.astro"
 import Camiseta from "../components/Camiseta.astro"
 import { getTranslations } from "../i18n/translations"
+import Posts from "../components/Posts/Posts.astro"
 
 const t = getTranslations(Astro.currentLocale || "es")
 ---
@@ -36,4 +37,5 @@ const t = getTranslations(Astro.currentLocale || "es")
 
         <Camiseta/>
 
+        <Posts/>
 </MainLayout>
