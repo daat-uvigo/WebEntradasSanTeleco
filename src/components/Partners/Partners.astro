@@ -10,13 +10,19 @@ const t = getTranslations(Astro.currentLocale || "es");
   
   async function loadPartnersImages() {
     const partnersDiv = document.getElementById("partners") as HTMLDivElement
+    const partnersStyles = window.getComputedStyle(partnersDiv)
     
     const partners = await getPartners()
   
-    partners.forEach(p => {
+    partners.forEach((p, i) => {
       const imgElement = document.createElement("img")
       imgElement.src = p.logo 
       partnersDiv.appendChild(imgElement)
+      if (i === partners.length -1 && partners.length % 3 != 0) {
+        if (partnersStyles.getPropertyValue("--mobile") == "0") {
+          imgElement.style.gridColumn = "span 3"
+        }
+      }
     })
   }
 
@@ -41,11 +47,13 @@ const t = getTranslations(Astro.currentLocale || "es");
 <style>
 
     #partners {
+        --mobile: 1;
         display: grid;
         grid-template-columns: repeat(2, 1fr);   
         
         @media (width >= 48rem) {
-            grid-template-columns: repeat(3, 1fr);   
+            --mobile: 0;
+            grid-template-columns: repeat(3, 1fr);
         }
         gap: 1rem;
         justify-content: center;
