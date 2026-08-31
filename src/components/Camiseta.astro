@@ -4,6 +4,9 @@ import { Image } from "astro:assets"
 import "atropos/atropos.min.css"
 import camisetaFrontal from "./camiseta-frontal.png"
 import camisetaReverso from "./camiseta-reverso.png"
+import { getTranslations } from "../i18n/translations";
+
+const t = getTranslations(Astro.currentLocale || "es");
 
 ---
 
@@ -34,34 +37,41 @@ document.addEventListener("astro:after-swap", initAtropos);
 
 </script>
 
-<section class="flex flex-col md:flex-row md:gap-3 p-6">
-    <div class="atropos mx-auto py-12 rounded-2xl" id="camiseta-frontal" data-height={camisetaFrontal.height} data-width={camisetaFrontal.width}>
-      <!-- scale container (required) -->
-      <div class="atropos-scale">
-        <!-- rotate container (required) -->
-        <div class="atropos-rotate">
-          <!-- inner container (required) -->
-          <div class="atropos-inner rounded-2xl mx-auto">
-            <!-- put your custom content here -->
-            <Image src={camisetaFrontal} alt="camiseta santeleco actual frontal" />            
+<section >
+    <h3
+        class="pt-12 subtitle text-center mt-4 text-pretty text-4xl text-gray-200 underline"
+    >
+        {t.tshirt}
+    </h3>
+    <div class="flex flex-col md:flex-row md:gap-3 p-6">
+        <div class="atropos mx-auto py-12 rounded-2xl" id="camiseta-frontal" data-height={camisetaFrontal.height} data-width={camisetaFrontal.width}>
+          <!-- scale container (required) -->
+          <div class="atropos-scale">
+            <!-- rotate container (required) -->
+            <div class="atropos-rotate">
+              <!-- inner container (required) -->
+              <div class="atropos-inner rounded-2xl mx-auto">
+                <!-- put your custom content here -->
+                <Image src={camisetaFrontal} alt="camiseta santeleco actual frontal" />            
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    
-    <div class="atropos camiseta mx-auto py-12 rounded-2xl" id="camiseta-reverso" data-height={camisetaReverso.height} data-width={camisetaReverso.width}>
-      <!-- scale container (required) -->
-      <div class="atropos-scale">
-        <!-- rotate container (required) -->
-        <div class="atropos-rotate">
-          <!-- inner container (required) -->
-          <div class="atropos-inner rounded-2xl mx-auto">
-            <!-- put your custom content here -->
-            <Image src={camisetaReverso} alt="camiseta santeleco actual reverso" />
-            
+        
+        <div class="atropos camiseta mx-auto py-12 rounded-2xl" id="camiseta-reverso" data-height={camisetaReverso.height} data-width={camisetaReverso.width}>
+          <!-- scale container (required) -->
+          <div class="atropos-scale">
+            <!-- rotate container (required) -->
+            <div class="atropos-rotate">
+              <!-- inner container (required) -->
+              <div class="atropos-inner rounded-2xl mx-auto">
+                <!-- put your custom content here -->
+                <Image src={camisetaReverso} alt="camiseta santeleco actual reverso" />
+                
+              </div>
+            </div>
           </div>
         </div>
-      </div>
     </div>
 </section>
 

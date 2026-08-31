@@ -1,3 +1,10 @@
+---
+import { getTranslations } from "../../i18n/translations";
+
+const t = getTranslations(Astro.currentLocale || "es");
+
+---
+
 <script>
 
   import { getPosts } from "../../lib/pb/Posts"
@@ -28,7 +35,7 @@
     <h3
         class="pt-12 subtitle text-center mt-4 text-pretty text-4xl text-gray-200 underline"
     >
-        Info
+        {t.info}
     </h3>
     <div
         id="posts"
