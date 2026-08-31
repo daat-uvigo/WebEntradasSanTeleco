@@ -1,22 +1,25 @@
 @reference "tailwindcss";
 
 .embla {
-  max-width: 48rem;
+  @apply md:max-w-[70dvw] max-w-dvw;
   margin: auto;
 
-  --slide-height: 19rem;
-  --slide-spacing: 1rem;
+  --slide-height: 80dvh;
+  --slide-spacing: 2rem;
   --slide-size: 70%;
 }
 
 .embla__viewport {
   overflow: hidden;
+  @apply rounded-xl shadow-lg shadow-indigo-600; 
 }
 
 .embla__container {
   display: flex;
+  align-items: flex-start;
   touch-action: pan-y pinch-zoom;
   margin-left: calc(var(--slide-spacing) * -1);
+  transition: height 0.2s;
 }
 
 .embla__slide {
@@ -28,11 +31,11 @@
 
 .embla__slide__img {
   display: block;
-  height: var(--slide-height);
   width: 100%;
+  max-height: var(--slide-height);
   object-fit: cover;
   border-radius: 1.8rem;
-  @apply rounded-xl shadow-lg shadow-indigo-600;
+  @apply md:min-h-[40dvh] min-h-[20dvh];
 }
 
 .embla__controls {
