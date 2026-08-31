@@ -19,7 +19,8 @@ export const translations = {
     faqAnswerWho: "El único requisito indispensable para acceder al recinto es ser <strong>mayor de edad (+18)</strong>.",
     faqMapLink: "Abrir ubicación en Google Maps →",
     privacyLink: "Política de privacidad",
-    photos: "Fotos",
+    partners: "Patrocinadores",
+    photos: "Galería",
     fullName: "Nombre completo*",
     email: "Correo electrónico*",
     privacyConsent: "He leído y acepto la",
@@ -37,8 +38,7 @@ export const translations = {
     faqAnswerHow: `Reservar a túa entrada é rápido e moi sinxelo. Só tes que seguir estes sinxelos pasos:<br><br>
 
 <strong>1. Introduce os teus datos:</strong> Rellena o formulario. <em>(¡Revisa ben que o teu email estea ben escrito!)</em>.<br>
-<strong>2. Selecciona as túas entradas.</strong><br>
-<strong>3. ¡Todo listo!</strong> Recibirás un correo de confirmación co teu código QR.<br><br>
+<strong>2. Selecciona as túas entradas.</strong><br> <strong>3. ¡Todo listo!</strong> Recibirás un correo de confirmación co teu código QR.<br><br>
 
 <span class="text-sm opacity-80">¿Non recibiches o correo? Revisa a túa carpeta de Spam ou contáctanos en contacto@daat.uvigo.es.</span>`,
     faqAnswerWhere: `Como manda a tradición, este ano volveremos celebrar a festa no noso lugar de sempre:<br>
@@ -46,7 +46,8 @@ export const translations = {
     faqAnswerWho: "O único requisito indispensable para acceder ao recinto é ser <strong>maior de idade (+18)</strong>.",
     faqMapLink: "Abrir ubicación en Google Maps →",
     privacyLink: "Política de privacidade",
-    photos: "Fotos",
+    partners: "Patrocinadores",
+    photos: "Galería",
     fullName: "Nome completo*",
     email: "Correo electrónico*",
     privacyConsent: "Leín e acepto a",
@@ -73,6 +74,7 @@ export const translations = {
     faqAnswerWho: "The only requirement to access the venue is to be <strong>of legal age (+18)</strong>.",
     faqMapLink: "Open location in Google Maps →",
     privacyLink: "Privacy policy",
+    partners: "Sponsors",
     photos: "Photos",
     fullName: "Full name*",
     email: "Email*",
