@@ -6,6 +6,8 @@ const t = getTranslations(Astro.currentLocale || "es");
 
 <script>
     import EmblaCarousel from 'embla-carousel'
+    import AutoHeight from 'embla-carousel-auto-height'
+    import AutoPlay from 'embla-carousel-autoplay'
     import { setupTweenOpacity } from './EmblaCarouselTweenOpacity'
     import { addPrevNextButtonClickHandlers } from './EmblaCarouselArrowButtons'
     import { setupLazyLoadImage } from './EmblaCarouselLazyLoad'
@@ -23,7 +25,10 @@ const t = getTranslations(Astro.currentLocale || "es");
 
             imgElement.className = "embla__slide__img embla__lazy-load__img"
             imgElement.dataset.src = p.img
-
+            imgElement.addEventListener("dblclick", () => {
+              window.open(imgElement.dataset.src, "_blank")?.focus()
+            })
+            
             const emblaSlide = document.createElement("div")
             emblaSlide.className = "embla__slide embla__lazy-load"
             const emblaSpinner = document.createElement("span")
@@ -42,7 +47,11 @@ const t = getTranslations(Astro.currentLocale || "es");
         const prevBtn = emblaNode?.querySelector('.embla__button--prev')
         const nextBtn = emblaNode?.querySelector('.embla__button--next')
 
-        const emblaApi = EmblaCarousel(viewportNode, OPTIONS)
+        const emblaApi = EmblaCarousel(
+          viewportNode,
+          OPTIONS, 
+          [AutoHeight(), AutoPlay()]
+        )
 
         const loadImagesInView = setupLazyLoadImage(emblaApi)
 
@@ -98,20 +107,3 @@ const t = getTranslations(Astro.currentLocale || "es");
         </div>
     </div>
 </section>
-
-<style>
-
-    #photos {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);   
-        
-        @media (width >= 48rem) {
-            grid-template-columns: repeat(3, 1fr);   
-        }
-        gap: 1rem;
-        justify-content: center;
-        align-items: center;
-        justify-items: center;
-    }
-
-</style>
