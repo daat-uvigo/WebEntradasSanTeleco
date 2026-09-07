@@ -12,7 +12,7 @@ const t = getTranslations(Astro.currentLocale || "es");
 
 <MainLayout>
     <form
-        action="/api/reserva"
+        action="/reservas/api/reserva"
         method="post"
         enctype="multipart/form-data"
         class="mx-auto max-w-md space-y-4 rounded-lg border p-6 border-gray-600 bg-gray-800"
@@ -59,7 +59,7 @@ const t = getTranslations(Astro.currentLocale || "es");
         </div>
         
         <div class="hidden">
-            <altcha-widget challengeurl="/api/challenge" language="es-es" auto="onsubmit" hidelogo hidefooter></altcha-widget>
+            <altcha-widget challengeurl="/reservas/api/challenge" language="es-es" auto="onsubmit" hidelogo hidefooter></altcha-widget>
         </div>
         
         <button

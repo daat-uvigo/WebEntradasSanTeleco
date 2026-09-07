@@ -1,16 +1,16 @@
 export const prerender = false;
 
 import type { APIRoute } from "astro";
-import { DeleteReserva, GetReservas, RequestReserva } from "../../lib/db/db";
-import { reservasInsertSchema, reservasTable } from "../../lib/db/schema";
+import { DeleteReserva, GetReservas, RequestReserva } from "../../../lib/db/db";
+import { reservasInsertSchema, reservasTable } from "../../../lib/db/schema";
 import * as z from "zod/mini";
-import { sha512 } from "../../lib/utils/hash";
+import { sha512 } from "../../../lib/utils/hash";
 import { verifySolution } from "altcha-lib";
-import { hmacKey } from "../../lib/challenge/challenge";
+import { hmacKey } from "../../../lib/challenge/challenge";
 import { getSecret } from "astro:env/server";
 import { toDataURL } from "qrcode"
-import { sendMailResend } from "../../lib/mail/resend";
-import { sendMailNodeMailer } from "../../lib/mail/nodemailer";
+import { sendMailResend } from "../../../lib/mail/resend";
+import { sendMailNodeMailer } from "../../../lib/mail/nodemailer";
 
 export const POST = (async ({ request, redirect }) => {
     

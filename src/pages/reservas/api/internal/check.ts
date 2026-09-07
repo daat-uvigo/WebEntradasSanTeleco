@@ -1,9 +1,9 @@
 export const prerender = false;
 
 import type { APIRoute } from "astro";
-import { BuyReserva, GetReservaByIdAndEmailHash } from "../../../lib/db/db";
+import { BuyReserva, GetReservaByIdAndEmailHash } from "../../../../lib/db/db";
 import { getSecret } from "astro:env/server";
-import { compareSecretStrings } from "../../../lib/utils/compare";
+import { compareSecretStrings } from "../../../../lib/utils/compare";
 
 export const GET = (async ({ request }) => {
   

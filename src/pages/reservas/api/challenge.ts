@@ -1,7 +1,7 @@
 export const prerender = false;
 
 import type { APIRoute } from "astro";
-import { hmacKey } from "../../lib/challenge/challenge";
+import { hmacKey } from "../../../lib/challenge/challenge";
 import { createChallenge } from "altcha-lib";
 
 export const GET = (async () => {
