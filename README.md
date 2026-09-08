@@ -38,7 +38,7 @@ All commands are run from the root of the project, from a terminal:
 
 ## How to use with local database
 
-1. Add to .env LOCAL=true
+1. Add to .env PUBLIC_LOCAL=true
 2. Add to .env DB_FILE_NAME=file:reservas.db
 
 Now you should use `pnpm exec drizzle-kit push` to create the initial database schema
@@ -48,7 +48,7 @@ Now you should use `pnpm exec drizzle-kit push` to create the initial database s
 By default the project uses turso for the database but you need to do some steps to configure it:
 
 1. Create turso account and new database
-2. Add to .env LOCAL=false
+2. Add to .env PUBLIC_LOCAL=false
 2. Add to .env DB_FILE_NAME=<turso_url>
 3. Add to .env DB_TOKEN=<turso_token>
 
@@ -76,7 +76,7 @@ Now you should use `pnpm exec drizzle-kit push` to create the initial database s
 
 ```env
 # For Gmail & SQLite (else RESEND & TURSO)
-LOCAL=true
+PUBLIC_LOCAL=true
 DB_FILE_NAME=file:reservas.db
 DB_TOKEN=xxx
 HMAC_KEY=B78T0uXf+PxvGBEUoGSXWL0d+98bwRasOR0wyj14LvhMHTU3dyIGO3m4uMLrlyTu

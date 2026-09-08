@@ -20,7 +20,7 @@ const hexLoader = {
 };
 
 const adapter = async function() {
-  if (process.env.LOCAL === "true") {
+  if (process.env.PUBLIC_LOCAL === "true") {
     const nodejs = (await import("@astrojs/node")).default
     
     return nodejs({

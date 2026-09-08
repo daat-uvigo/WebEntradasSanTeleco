@@ -3,7 +3,7 @@ HMAC_KEY=$(openssl rand -base64 48)
 SECRET_KEY=$(openssl rand -base64 48)
 
 FILE="
-LOCAL=true
+PUBLIC_LOCAL=true
 HMAC_KEY=$HMAC_KEY
 SECRET_KEY=$SECRET_KEY
 
