@@ -12,6 +12,7 @@ const t = getTranslations(Astro.currentLocale || "es");
 
 <MainLayout>
     <form
+        data-astro-reload
         action="/reservas/api/reserva"
         method="post"
         enctype="multipart/form-data"

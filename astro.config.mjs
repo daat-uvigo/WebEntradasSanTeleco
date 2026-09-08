@@ -35,6 +35,11 @@ const adapter = async function() {
 
 // https://astro.build/config
 export default defineConfig({
+  security: {
+    allowedDomains: [
+      {hostname: 'santeleco.uvigo.es', protocol: 'https'}
+    ]
+  },
   vite: { plugins: [hexLoader ,tailwindcss()] },
   adapter: await adapter(),
   site: "https://santeleco.uvigo.es",
