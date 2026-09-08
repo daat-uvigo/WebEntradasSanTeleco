@@ -1,7 +1,6 @@
-import { getSecret } from "astro:env/server";
 import { Resend } from "resend";
 
-const resend = new Resend(getSecret("RESEND_API_KEY")!);
+const resend = new Resend(import.meta.env.RESEND_API_KEY!);
 
 export async function sendMailResend(
   qrBase64: string,
@@ -9,7 +8,7 @@ export async function sendMailResend(
   reservaFullName: string,
 ) {
   const { data, error } = await resend.emails.send({
-    from: getSecret("EMAIL_ADDRESS"),
+    from: import.meta.env.EMAIL_ADDRESS,
     to: reservaMail,
     template: {
       id: "reservation-confirmation", // Plantilla definida en resend.com

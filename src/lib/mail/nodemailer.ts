@@ -1,4 +1,3 @@
-import { getSecret } from "astro:env/server";
 import nodemailer from "nodemailer"
 //@ts-ignore
 import santelecoimage_hex from "./santeleco.jpg?raw-hex"
@@ -10,8 +9,8 @@ const transporter = nodemailer.createTransport({
   requireTLS: true,
   name: "santeleco.uvigo.es",
   auth: {
-    user: getSecret("EMAIL_ADDRESS"),
-    pass: getSecret("GOOGLE_APP_PASSWORD")
+    user: import.meta.env.EMAIL_ADDRESS,
+    pass: import.meta.env.GOOGLE_APP_PASSWORD
   },
 });
 
@@ -22,7 +21,7 @@ export async function sendMailNodeMailer(
 ) {
 
   const info = await transporter.sendMail({
-    from: getSecret("EMAIL_ADDRESS"),
+    from: import.meta.env.EMAIL_ADDRESS,
     to: reservaMail,
     subject: "Reserva SanTeleco",
     html: mailContent.replace("{{{nombre_completo}}}", reservaFullName),

@@ -4,7 +4,7 @@ import { eq, and } from 'drizzle-orm'
 
 const db = await async function () {
   
-  const local = getSecret("LOCAL") === "true"
+  const local = import.meta.env.PUBLIC_LOCAL === "true"
   
   if (local) {
     // Este cliente soporta file://
@@ -12,8 +12,8 @@ const db = await async function () {
     
     return drizzle({
       connection: {
-        url: getSecret("DB_FILE_NAME")!,
-        authToken: getSecret("DB_TOKEN"),
+        url: import.meta.env.DB_FILE_NAME!,
+        authToken: import.meta.env.DB_TOKEN,
       }
     });
     
@@ -23,8 +23,8 @@ const db = await async function () {
   
   return drizzle({
     connection: {
-      url: getSecret("DB_FILE_NAME")!,
-      authToken: getSecret("DB_TOKEN"),
+      url: import.meta.env.DB_FILE_NAME!,
+      authToken: import.meta.env.DB_TOKEN,
     }
   });
   

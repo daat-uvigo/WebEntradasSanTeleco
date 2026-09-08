@@ -7,7 +7,6 @@ import * as z from "zod/mini";
 import { sha512 } from "../../../lib/utils/hash";
 import { verifySolution } from "altcha-lib";
 import { hmacKey } from "../../../lib/challenge/challenge";
-import { getSecret } from "astro:env/server";
 import { toDataURL } from "qrcode"
 import { sendMailResend } from "../../../lib/mail/resend";
 import { sendMailNodeMailer } from "../../../lib/mail/nodemailer";
@@ -50,7 +49,7 @@ export const POST = (async ({ request, redirect }) => {
       }))
       
       // Send mail - if local Nodemailer else Resend
-      if (getSecret("LOCAL") === "true") {
+      if (import.meta.env.PUBLIC_LOCAL === "true") {
         await sendMailNodeMailer(qrBase64, reservaMail, reserva.full_name)
       } else {
         await sendMailResend(qrBase64, reservaMail, reserva.full_name)

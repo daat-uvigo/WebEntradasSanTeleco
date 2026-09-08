@@ -2,7 +2,6 @@ export const prerender = false;
 
 import type { APIRoute } from "astro";
 import { BuyReserva, GetReservaByIdAndEmailHash } from "../../../../lib/db/db";
-import { getSecret } from "astro:env/server";
 import { compareSecretStrings } from "../../../../lib/utils/compare";
 
 export const GET = (async ({ request }) => {
@@ -45,7 +44,7 @@ export const PATCH = (async ({ request }) => {
     
     if (!id || !emailHash || !secret_key) throw new Error()
 
-    if (!compareSecretStrings(secret_key, getSecret("SECRET_KEY")!)) throw new Error() 
+    if (!compareSecretStrings(secret_key, import.meta.env.SECRET_KEY!)) throw new Error() 
 
     const reserva = (await BuyReserva(id, emailHash))[0]
     
