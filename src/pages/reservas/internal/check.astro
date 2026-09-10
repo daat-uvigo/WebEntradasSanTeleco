@@ -6,8 +6,10 @@ import MainLayout from "../../../layouts/MainLayout.astro"
 <script>
 
 import QrScanner from 'qr-scanner'; 
+import type { reservasTable } from '../../../lib/db/schema';
 
 const videoElement = document.getElementById("qr-video") as HTMLVideoElement
+const reservasElement = document.getElementById("reservas") as HTMLDivElement
 const resultElement = document.getElementById("result") as HTMLSpanElement
 
 const scanBtn = document.getElementById("scan-btn") as HTMLButtonElement
@@ -70,8 +72,6 @@ async function buy() {
     const query = new URLSearchParams(url.searchParams)
   
     const secret_key = query.get("secret_key")
-
-    alert(secret_key)
     
     const { id, emailHash } = currentUser
     
@@ -89,6 +89,35 @@ async function buy() {
   }
 }
 
+async function getReservas() {
+  try {
+    const url = new URL(window.location.href);
+    const query = new URLSearchParams(url.searchParams)
+  
+    const secret_key = query.get("secret_key")
+        
+    const res = await fetch(`/reservas/api/internal/reservas?secret_key=${secret_key}`, {
+      method: "GET"
+    })
+  
+    if (!res.ok) {
+      throw new Error()
+    }
+
+    const reservas = await res.json() as typeof reservasTable[]
+    reservas.forEach((r) => {
+      const rElement = document.createElement("p")
+      rElement.innerText = `Nombre: ${r.full_name} - Email Hash: ${r.emailHash} (ID: ${r.id}): Comprada - ${r.verified ? 'SI' : 'NO'}  `
+      reservasElement.append(rElement)
+    })
+    
+  } catch {
+    reservasElement.innerText = "Hubo un error en el proceso de listar reservas"
+  }
+}
+
+getReservas()
+
 scanBtn.addEventListener("click", scanQr)
 buyBtn.addEventListener("click", buy)
 
@@ -96,6 +125,11 @@ buyBtn.addEventListener("click", buy)
 
 <MainLayout>
     <div class="flex flex-col gap-4">
+
+        <div id="reservas" class="text-white">
+            
+        </div>
+        
         <h2 class="text-white text-xl">
             Resultado
         </h2>

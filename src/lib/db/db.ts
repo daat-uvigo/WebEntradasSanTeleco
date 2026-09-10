@@ -1,4 +1,3 @@
-import { getSecret } from "astro:env/server";
 import { reservasTable } from './schema';
 import { eq, and } from 'drizzle-orm'
 
