@@ -13,9 +13,9 @@ const reservasElement = document.getElementById("reservas") as HTMLDivElement
 const resultElement = document.getElementById("result") as HTMLSpanElement
 
 const scanBtn = document.getElementById("scan-btn") as HTMLButtonElement
-const buyBtn = document.getElementById("buy-btn") as HTMLButtonElement
+const actionBtn = document.getElementById("buy-btn") as HTMLButtonElement
 
-let currentUser: {id?: string; emailHash?: string} = {}
+let currentUser: {id?: string; emailHash?: string, verified?: boolean} = {}
 
 async function scanQr() {
   
@@ -24,7 +24,7 @@ async function scanQr() {
     async result => {
       try {
         
-        buyBtn.classList.add("hidden")
+        actionBtn.classList.add("hidden")
         
         const {id , email_hash} = JSON.parse(result.data)
         
@@ -48,9 +48,13 @@ async function scanQr() {
           resultElement.innerText = `Reservada: ${resData.full_name} \n(${id})`
           currentUser.id = id
           currentUser.emailHash = email_hash
-          buyBtn.classList.remove("hidden")
+          currentUser.verified = false
+          actionBtn.innerText = "Marcar como comprado"
+          actionBtn.classList.remove("hidden")
         } else {
+          currentUser.verified = true
           resultElement.innerText = `Comprada: ${resData.full_name} \n(${id})`
+          actionBtn.innerText = "Desmarcar comprado"
         }
         
       } catch {
@@ -66,7 +70,7 @@ async function scanQr() {
   await scanner.start()
 }
 
-async function buy() {
+async function action() {
   try {
     const url = new URL(window.location.href);
     const query = new URLSearchParams(url.searchParams)
@@ -75,17 +79,36 @@ async function buy() {
     
     const { id, emailHash } = currentUser
     
-    const res = await fetch(`/reservas/api/internal/check?id=${encodeURI(id!)}&email_hash=${encodeURI(emailHash!)}&secret_key=${secret_key}`, {
-      method: "PATCH"
-    })
+    if (!currentUser.verified) {
+      const res = await fetch(`/reservas/api/internal/check?id=${encodeURI(id!)}&email_hash=${encodeURI(emailHash!)}&secret_key=${secret_key}&action=BUY`, {
+        method: "PATCH"
+      })
+    
+      if (!res.ok) {
+        throw new Error()
+      }
   
-    if (!res.ok) {
-      throw new Error()
+      currentUser.verified = true
+      resultElement.innerHTML = "Comprada con exito"
+    } else {
+      const res = await fetch(`/reservas/api/internal/check?id=${encodeURI(id!)}&email_hash=${encodeURI(emailHash!)}&secret_key=${secret_key}&action=UNDO-BUY`, {
+        method: "PATCH"
+      })
+    
+      if (!res.ok) {
+        throw new Error()
+      }
+  
+      currentUser.verified = false
+      resultElement.innerHTML = "Descarmar comprada con exito"
     }
-
-    resultElement.innerHTML = "Comprada con exito"
   } catch {
-    resultElement.innerText = "Hubo un error en el proceso de compra"
+
+     if (!currentUser.verified) {
+       resultElement.innerText = "Hubo un error en el proceso de compra"
+     } else {
+       resultElement.innerText = "Hubo un error en el proceso de desmarcar la compra"
+     }
   }
 }
 
@@ -95,7 +118,9 @@ async function getReservas() {
     const query = new URLSearchParams(url.searchParams)
   
     const secret_key = query.get("secret_key")
-        
+
+    if (!secret_key) throw new Error()
+    
     const res = await fetch(`/reservas/api/internal/reservas?secret_key=${secret_key}`, {
       method: "GET"
     })
@@ -119,7 +144,7 @@ async function getReservas() {
 getReservas()
 
 scanBtn.addEventListener("click", scanQr)
-buyBtn.addEventListener("click", buy)
+actionBtn.addEventListener("click", action)
 
 </script>
 

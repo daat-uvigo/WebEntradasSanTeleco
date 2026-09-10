@@ -1,7 +1,7 @@
 export const prerender = false;
 
 import type { APIRoute } from "astro";
-import { BuyReserva, GetReservaByIdAndEmailHash } from "../../../../lib/db/db";
+import { BuyReserva, GetReservaByIdAndEmailHash, UndoBuyReserva } from "../../../../lib/db/db";
 import { compareSecretStrings } from "../../../../lib/utils/compare";
 
 export const GET = (async ({ request }) => {
@@ -41,14 +41,21 @@ export const PATCH = (async ({ request }) => {
     const id = query.get("id")
     const emailHash = query.get("email_hash")
     const secret_key = query.get("secret_key")
-    
-    if (!id || !emailHash || !secret_key) throw new Error()
 
+    const action = query.get("action") as "BUY" | "UNDO-BUY" | ""
+
+    if (!id || !emailHash || !secret_key || !action) throw new Error()
+    
     if (!compareSecretStrings(secret_key, import.meta.env.SECRET_KEY!)) throw new Error() 
 
-    const reserva = (await BuyReserva(id, emailHash))[0]
+    if (action === "BUY") {
+      const reserva = (await BuyReserva(id, emailHash))[0]
+      return Response.json(reserva)
+    } else if (action === "UNDO-BUY") {
+      const reserva = (await UndoBuyReserva(id, emailHash))[0]
+      return Response.json(reserva)
+    } else throw new Error()
     
-    return Response.json(reserva)
   } catch (e) {
     
     console.error(e)
