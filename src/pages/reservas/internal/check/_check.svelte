@@ -96,7 +96,7 @@
         })
         
         if (!res.ok) {
-          resultReserva = "No hay reserva"
+          resultReserva = "No existe la reserva"
           return
         }
         
@@ -136,24 +136,6 @@
 
 <div class="flex flex-col gap-4">
 
-    <section class="text-white flex flex-col gap-3">
-        {#await getAllReservas()}
-            Cargando reservas
-        {:then reservas} 
-            {#if reservas.length}
-                {#each reservas as r}
-                    <p class="p-2 bg-amber-100 text-gray-900">
-                        Nombre: {r.full_name} (ID: {r.id}): Comprada - {r.verified ? 'SI' : 'NO'}
-                    </p>
-                {/each}
-            {:else}
-                Todavía no hay reservas
-            {/if}
-        {:catch}
-            Fallo al obtener reservas
-        {/await}
-    </section>
-    <hr/>
     <section>
         <h2 class="text-white text-xl">
             Resultado
@@ -174,5 +156,26 @@
         </div>
         
         <video bind:this={videoElement}></video>
+    </section>
+    <hr/>
+    <section class="text-white flex flex-col gap-3">
+        <h2 class=" text-xl">
+            Reservas
+        </h2>
+        {#await getAllReservas()}
+            Cargando reservas
+        {:then reservas} 
+            {#if reservas.length}
+                {#each reservas as r}
+                    <p class="p-2 bg-amber-100 text-gray-900">
+                        Nombre: {r.full_name} (ID: {r.id}): Comprada - {r.verified ? 'SI' : 'NO'}
+                    </p>
+                {/each}
+            {:else}
+                Todavía no hay reservas
+            {/if}
+        {:catch}
+            Fallo al obtener reservas
+        {/await}
     </section>
 </div>
