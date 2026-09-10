@@ -17,53 +17,56 @@ const actionBtn = document.getElementById("buy-btn") as HTMLButtonElement
 
 let currentUser: {id?: string; emailHash?: string, verified?: boolean} = {}
 
+async function reloadReservas(result: string, scanner?: QrScanner) {
+  try {
+    
+    actionBtn.classList.add("hidden")
+    
+    const {id , email_hash} = JSON.parse(result)
+    
+    const res = await fetch(`/reservas/api/internal/check?id=${encodeURI(id)}&email_hash=${encodeURI(email_hash)}`, {
+      method: "GET"
+    })
+    
+    if (!res.ok) {
+      resultElement.innerText = "No hay reserva"
+      return
+    }
+    
+    const resData = await res.json() as {
+       id: string;
+       full_name: string;
+       verified: boolean | null;
+       emailHash: string;
+    }      
+    
+    if (!resData.verified) {
+      resultElement.innerText = `Reservada: ${resData.full_name} \n(${id})`
+      currentUser.id = id
+      currentUser.emailHash = email_hash
+      currentUser.verified = false
+      actionBtn.innerText = "Marcar como comprado"
+      actionBtn.classList.remove("hidden")
+    } else {
+      currentUser.verified = true
+      resultElement.innerText = `Comprada: ${resData.full_name} \n(${id})`
+      actionBtn.innerText = "Desmarcar comprado"
+      actionBtn.classList.remove("hidden")
+    }
+    
+  } catch {
+    resultElement.innerText = "Hubo un error en el proceso de verificación"
+  } finally {
+    scanner?.stop()
+  }
+}
+
 async function scanQr() {
   
   const scanner = new QrScanner(
     videoElement,
     async result => {
-      try {
-        
-        actionBtn.classList.add("hidden")
-        
-        const {id , email_hash} = JSON.parse(result.data)
-        
-        const res = await fetch(`/reservas/api/internal/check?id=${encodeURI(id)}&email_hash=${encodeURI(email_hash)}`, {
-          method: "GET"
-        })
-        
-        if (!res.ok) {
-          resultElement.innerText = "No hay reserva"
-          return
-        }
-        
-        const resData = await res.json() as {
-           id: string;
-           full_name: string;
-           verified: boolean | null;
-           emailHash: string;
-        }      
-        
-        if (!resData.verified) {
-          resultElement.innerText = `Reservada: ${resData.full_name} \n(${id})`
-          currentUser.id = id
-          currentUser.emailHash = email_hash
-          currentUser.verified = false
-          actionBtn.innerText = "Marcar como comprado"
-          actionBtn.classList.remove("hidden")
-        } else {
-          currentUser.verified = true
-          resultElement.innerText = `Comprada: ${resData.full_name} \n(${id})`
-          actionBtn.innerText = "Desmarcar comprado"
-          actionBtn.classList.remove("hidden")
-        }
-        
-      } catch {
-        resultElement.innerText = "Hubo un error en el proceso de verificación"
-      } finally {
-        scanner.stop()
-      }
-      
+      await reloadReservas(result.data, scanner)
     },
     {}
   )
@@ -101,8 +104,12 @@ async function action() {
       }
   
       currentUser.verified = false
-      resultElement.innerHTML = "Descarmar comprada con exito"
+      resultElement.innerHTML = "Desmarcar comprada con exito"
     }
+
+    await reloadReservas(JSON.stringify(currentUser))
+    
+    
   } catch {
 
      if (!currentUser.verified) {
