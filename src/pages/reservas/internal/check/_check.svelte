@@ -12,11 +12,11 @@
 
     let selectedAction: 'BUY' | 'UNDO-BUY' | null = $state(null)
     let actionBtnText = $derived(selectedAction === "BUY" ? "Marcar como comprado" : selectedAction === "UNDO-BUY" ? "Desmarcar comprado" : "No hay acción")
-    let result: string = $state("")
+    let resultReserva: string = $state("")
 
     let currentUser: {id?: string, emailHash?: string} = $state({})
     
-    async function getReservas() {
+    async function getAllReservas() {
       try {
         const url = new URL(window.location.href);
         const query = new URLSearchParams(url.searchParams)
@@ -37,10 +37,6 @@
       }
     }
 
-    $effect(() => {
-      getReservas()
-    })
-
     async function callAction() {
       try {
         const url = new URL(window.location.href);
@@ -60,7 +56,7 @@
           }
       
           selectedAction = "UNDO-BUY"
-          result = "Comprada con exito"
+          resultReserva = "Comprada con exito"
         } else if (selectedAction === "UNDO-BUY") {
           const res = await fetch(`/reservas/api/internal/check?id=${encodeURI(id!)}&email_hash=${encodeURI(emailHash!)}&secret_key=${secret_key}&action=UNDO-BUY`, {
             method: "PATCH"
@@ -71,24 +67,24 @@
           }
       
           selectedAction = "BUY"
-          result = "Desmarcar comprada con exito"
+          resultReserva = "Desmarcar comprada con exito"
         }
     
         setTimeout(async () => {
-          await reloadReservas(JSON.stringify(currentUser))
+          await getReserva(JSON.stringify(currentUser))
         }, 1500)
         
       } catch {
     
          if (selectedAction === "BUY") {
-           result = "Hubo un error en el proceso de compra"
+           resultReserva = "Hubo un error en el proceso de compra"
          } else if (selectedAction === "UNDO-BUY") {
-           result = "Hubo un error en el proceso de desmarcar la compra"
+           resultReserva = "Hubo un error en el proceso de desmarcar la compra"
          }
       }
     }
 
-    async function reloadReservas(result: string, scanner?: QrScanner) {
+    async function getReserva(result: string, scanner?: QrScanner) {
       try {
         
         selectedAction = null
@@ -100,24 +96,24 @@
         })
         
         if (!res.ok) {
-          result = "No hay reserva"
+          resultReserva = "No hay reserva"
           return
         }
         
         const resData = await res.json() as ReservaT
         
         if (!resData.verified) {
-          result = `Reservada: ${resData.full_name} \n(${id})`
+          resultReserva = `Reservada: ${resData.full_name} \n(${id})`
           selectedAction = "BUY"
           currentUser.id = id
           currentUser.emailHash = email_hash
         } else {
-          result = `Comprada: ${resData.full_name} \n(${id})`
+          resultReserva = `Comprada: ${resData.full_name} \n(${id})`
           selectedAction = "UNDO-BUY"
         }
         
       } catch {
-        result = "Hubo un error en el proceso de verificación"
+        resultReserva = "Hubo un error en el proceso de verificación"
       } finally {
         scanner?.stop()
       }
@@ -128,7 +124,7 @@
       const scanner = new QrScanner(
         videoElement,
         async result => {
-          await reloadReservas(result.data, scanner)
+          await getReserva(result.data, scanner)
         },
         {}
       )
@@ -141,7 +137,7 @@
 <div class="flex flex-col gap-4">
 
     <section class="text-white flex flex-col gap-3">
-        {#await getReservas()}
+        {#await getAllReservas()}
             Cargando reservas
         {:then reservas} 
             {#if reservas.length}
@@ -163,7 +159,7 @@
             Resultado
         </h2>
         <span class="h-10 text-white" >
-            {result}
+            {resultReserva}
         </span>
         
         <div class="flex flex-row">
