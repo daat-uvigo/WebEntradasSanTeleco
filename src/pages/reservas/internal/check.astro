@@ -55,6 +55,7 @@ async function scanQr() {
           currentUser.verified = true
           resultElement.innerText = `Comprada: ${resData.full_name} \n(${id})`
           actionBtn.innerText = "Desmarcar comprado"
+          actionBtn.classList.remove("hidden")
         }
         
       } catch {
