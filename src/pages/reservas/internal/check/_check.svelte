@@ -16,6 +16,8 @@
     let resultReserva: string = $state("")
 
     let currentUser: {id?: string, email_hash?: string} = $state({})
+
+    let getAllReservasPromise = $state(getAllReservas())
     
     async function getAllReservas() {
       try {
@@ -76,6 +78,7 @@
   
         setTimeout(async () => {
           await getReserva(JSON.stringify(currentUser))
+          getAllReservasPromise = getAllReservas()
         }, 1500)
         
       } catch {
@@ -169,7 +172,7 @@
         <h2 class=" text-xl">
             Reservas
         </h2>
-        {#await getAllReservas()}
+        {#await getAllReservasPromise}
             Cargando reservas
         {:then reservas} 
             <p class="p-2 bg-amber-200 text-black">
