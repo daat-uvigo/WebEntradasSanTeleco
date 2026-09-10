@@ -1,3 +1,5 @@
+export const prerender = false;
+
 import type { APIRoute } from "astro";
 import { GetReservas } from "../../../../lib/db/db";
 import { compareSecretStrings } from "../../../../lib/utils/compare";
