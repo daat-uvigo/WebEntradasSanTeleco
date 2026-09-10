@@ -138,10 +138,12 @@
 
     <section>
         <h2 class="text-white text-xl">
-            Resultado
+            Consultar QR de reserva
         </h2>
         <span class="h-10 text-white" >
-            {resultReserva}
+            {#if resultReserva}
+                Resultado: {resultReserva}
+            {/if}
         </span>
         
         <div class="flex flex-row">
@@ -165,6 +167,9 @@
         {#await getAllReservas()}
             Cargando reservas
         {:then reservas} 
+            <p class="p-2 bg-amber-200 text-black">
+                Reservas: {reservas.length} | Compradas: {reservas.filter((r) => r.verified).length}
+            </p>
             {#if reservas.length}
                 {#each reservas as r}
                     <p class="p-2 bg-amber-100 text-gray-900">
