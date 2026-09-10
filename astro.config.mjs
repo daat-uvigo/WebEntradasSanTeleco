@@ -4,6 +4,8 @@ import { defineConfig } from "astro/config";
 import tailwindcss from "@tailwindcss/vite";
 import fs from "fs"
 
+import svelte from "@astrojs/svelte";
+
 const hexLoader = {
     name: 'hex-loader',
     //@ts-ignore
@@ -40,10 +42,11 @@ export default defineConfig({
       {hostname: 'santeleco.uvigo.es', protocol: 'https'}
     ]
   },
+
   vite: { plugins: [hexLoader ,tailwindcss()] },
   adapter: await adapter(),
   site: "https://santeleco.uvigo.es",
-  
+
   // Native i18n Configuration
   i18n: {
     defaultLocale: "es",
@@ -51,5 +54,7 @@ export default defineConfig({
     routing: {
       prefixDefaultLocale: false,
     }
-  }
+  },
+
+  integrations: [svelte()]
 });
