@@ -1,5 +1,6 @@
 <script lang="ts">
     import QrScanner from 'qr-scanner'; 
+    import type { RequestPatchBodyT } from '../../api/internal/check';
 
     type ReservaT = {
       id: string;
@@ -14,7 +15,7 @@
     let actionBtnText = $derived(selectedAction === "BUY" ? "Marcar como comprado" : selectedAction === "UNDO-BUY" ? "Desmarcar comprado" : "No hay acción")
     let resultReserva: string = $state("")
 
-    let currentUser: {id?: string, emailHash?: string} = $state({})
+    let currentUser: {id?: string, email_hash?: string} = $state({})
     
     async function getAllReservas() {
       try {
@@ -39,37 +40,40 @@
 
     async function callAction() {
       try {
+
+        if (!selectedAction) throw new Error()
+        
         const url = new URL(window.location.href);
         const query = new URLSearchParams(url.searchParams)
       
         const secret_key = query.get("secret_key")
         
-        const { id, emailHash } = currentUser
+        const { id, email_hash } = currentUser
+
+        const bodyRequest = {
+          email_hash,
+          id,
+          secret_key,
+          action: selectedAction
+        } as RequestPatchBodyT
         
-        if (selectedAction === "BUY") {
-          const res = await fetch(`/reservas/api/internal/check?id=${encodeURI(id!)}&email_hash=${encodeURI(emailHash!)}&secret_key=${secret_key}&action=BUY`, {
-            method: "PATCH"
-          })
-        
-          if (!res.ok) {
-            throw new Error()
-          }
+        const res = await fetch("/reservas/api/internal/check", {
+          method: "PATCH",
+          body: JSON.stringify(bodyRequest)
+        })
       
+        if (!res.ok) {
+          throw new Error()
+        }
+
+        if (selectedAction === "BUY") {
           selectedAction = "UNDO-BUY"
           resultReserva = "Comprada con exito"
         } else if (selectedAction === "UNDO-BUY") {
-          const res = await fetch(`/reservas/api/internal/check?id=${encodeURI(id!)}&email_hash=${encodeURI(emailHash!)}&secret_key=${secret_key}&action=UNDO-BUY`, {
-            method: "PATCH"
-          })
-        
-          if (!res.ok) {
-            throw new Error()
-          }
-      
           selectedAction = "BUY"
           resultReserva = "Desmarcar comprada con exito"
         }
-    
+  
         setTimeout(async () => {
           await getReserva(JSON.stringify(currentUser))
         }, 1500)
@@ -106,7 +110,7 @@
           resultReserva = `Reservada: ${resData.full_name} \n(${id})`
           selectedAction = "BUY"
           currentUser.id = id
-          currentUser.emailHash = email_hash
+          currentUser.email_hash = email_hash
         } else {
           resultReserva = `Comprada: ${resData.full_name} \n(${id})`
           selectedAction = "UNDO-BUY"
