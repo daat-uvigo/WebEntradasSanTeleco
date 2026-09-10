@@ -44,9 +44,9 @@ export const PATCH = (async ({ request }) => {
     
     const { id, email_hash, secret_key, action } = await request.json() as RequestPatchBodyT
 
-    if (!id || !email_hash || !secret_key || !action) throw new Error()
+    if (!id || !email_hash || !secret_key || !action) throw new Error("id, email_hash, secret_key or action are null")
     
-    if (!compareSecretStrings(secret_key, import.meta.env.SECRET_KEY!)) throw new Error() 
+    if (!compareSecretStrings(secret_key, import.meta.env.SECRET_KEY!)) throw new Error("Secret key is not correct") 
 
     if (action === "BUY") {
       const reserva = (await BuyReserva(id, email_hash))[0]
@@ -54,12 +54,11 @@ export const PATCH = (async ({ request }) => {
     } else if (action === "UNDO-BUY") {
       const reserva = (await UndoBuyReserva(id, email_hash))[0]
       return Response.json(reserva)
-    } else throw new Error()
+    } else throw new Error(`Action ${action}, doesn't exist`)
     
   } catch (e) {
-    
     console.error(e)
-    return new Response(JSON.stringify({error: e}), {
+    return new Response("Error", {
       status: 404,
       statusText: "Not found",
     })
