@@ -14,7 +14,7 @@
     let actionBtnText = $derived(selectedAction === "BUY" ? "Marcar como comprado" : selectedAction === "UNDO-BUY" ? "Desmarcar comprado" : "No hay acción")
     let result: string = $state("")
 
-    let currentUser: {id?: string, emailHash?: string, verified?: boolean} = $state({})
+    let currentUser: {id?: string, emailHash?: string} = $state({})
     
     async function getReservas() {
       try {
@@ -50,7 +50,7 @@
         
         const { id, emailHash } = currentUser
         
-        if (!currentUser.verified) {
+        if (selectedAction === "BUY") {
           const res = await fetch(`/reservas/api/internal/check?id=${encodeURI(id!)}&email_hash=${encodeURI(emailHash!)}&secret_key=${secret_key}&action=BUY`, {
             method: "PATCH"
           })
@@ -59,9 +59,9 @@
             throw new Error()
           }
       
-          currentUser.verified = true
+          selectedAction = "UNDO-BUY"
           result = "Comprada con exito"
-        } else {
+        } else if (selectedAction === "UNDO-BUY") {
           const res = await fetch(`/reservas/api/internal/check?id=${encodeURI(id!)}&email_hash=${encodeURI(emailHash!)}&secret_key=${secret_key}&action=UNDO-BUY`, {
             method: "PATCH"
           })
@@ -70,7 +70,7 @@
             throw new Error()
           }
       
-          currentUser.verified = false
+          selectedAction = "BUY"
           result = "Desmarcar comprada con exito"
         }
     
@@ -80,9 +80,9 @@
         
       } catch {
     
-         if (!currentUser.verified) {
+         if (selectedAction === "BUY") {
            result = "Hubo un error en el proceso de compra"
-         } else {
+         } else if (selectedAction === "UNDO-BUY") {
            result = "Hubo un error en el proceso de desmarcar la compra"
          }
       }
@@ -111,11 +111,9 @@
           selectedAction = "BUY"
           currentUser.id = id
           currentUser.emailHash = email_hash
-          currentUser.verified = false
         } else {
           result = `Comprada: ${resData.full_name} \n(${id})`
           selectedAction = "UNDO-BUY"
-          currentUser.verified = true
         }
         
       } catch {
