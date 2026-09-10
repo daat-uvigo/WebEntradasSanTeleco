@@ -105,12 +105,13 @@
         }
         
         const resData = await res.json() as ReservaT
+
+        currentUser.id = id
+        currentUser.email_hash = email_hash
         
         if (!resData.verified) {
           resultReserva = `Reservada: ${resData.full_name} \n(${id})`
           selectedAction = "BUY"
-          currentUser.id = id
-          currentUser.email_hash = email_hash
         } else {
           resultReserva = `Comprada: ${resData.full_name} \n(${id})`
           selectedAction = "UNDO-BUY"
