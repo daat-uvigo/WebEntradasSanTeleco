@@ -107,7 +107,7 @@ async function getReservas() {
     const reservas = await res.json() as typeof reservasTable[]
     reservas.forEach((r) => {
       const rElement = document.createElement("p")
-      rElement.innerText = `Nombre: ${r.full_name} - Email Hash: ${r.emailHash} (ID: ${r.id}): Comprada - ${r.verified ? 'SI' : 'NO'}  `
+      rElement.innerText = `Nombre: ${r.full_name} (ID: ${r.id}): Comprada - ${r.verified ? 'SI' : 'NO'}  `
       reservasElement.append(rElement)
     })
     
