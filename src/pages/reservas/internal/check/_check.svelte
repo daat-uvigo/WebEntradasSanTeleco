@@ -139,6 +139,28 @@
       
       await scanner.start()
     }
+
+    async function exportCSV() {
+
+      const reservas = await getAllReservas()
+
+      let csv = "ID,FULL_NAME,EMAIL_HASH,BUY\r\n"
+
+      reservas.forEach(r => {
+        csv += `${r.id},${r.full_name},${r.emailHash},${r.verified}\r\n`
+      })
+
+      const csvFile = new Blob([csv], {type: "text/csv"})
+
+      const downloadLink = document.createElement("a")
+
+      downloadLink.download = "Reservas-export.csv"
+      downloadLink.href = window.URL.createObjectURL(csvFile)
+      downloadLink.style.display = "none"
+      
+      document.body.appendChild(downloadLink)
+      downloadLink.click()
+    }
     
 </script>
 
@@ -175,9 +197,14 @@
         {#await getAllReservasPromise}
             Cargando reservas
         {:then reservas} 
-            <p class="p-2 bg-amber-200 text-black">
-                Reservas: {reservas.length} | Compradas: {reservas.filter((r) => r.verified).length}
-            </p>
+            <div class="p-2 bg-amber-200 text-black flex flex-row justify-start">
+                <p>
+                    Reservas: {reservas.length} | Compradas: {reservas.filter((r) => r.verified).length}
+                </p>
+                <button onclick={exportCSV} class="px-2 bg-gray-900 text-white mx-auto">
+                    Exportar CSV
+                </button>
+            </div>
             {#if reservas.length}
                 {#each reservas as r}
                     <p class="p-2 bg-amber-100 text-gray-900">
