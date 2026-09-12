@@ -1,7 +1,7 @@
 # Web Entradas San Teleco
 
-Although this repository is public, the content is under copyright by the contributors of it and DAAT Uvigo.
-So no one except those who hold copyright can use/modify/share as stated here https://choosealicense.com/no-permission/
+Although this repository is public, the content is under copyright by DAAT Uvigo.
+So no one except those who hold copyright (DAAT Uvigo) can use/modify/share as stated here https://choosealicense.com/no-permission/
 
 ## Astro
 
