@@ -1,5 +1,8 @@
 # Web Entradas San Teleco
 
+Although this repository is public, the content is under copyright by the contributors of it and DAAT Uvigo.
+So no one except those who hold copyright can use/modify/share as stated here https://choosealicense.com/no-permission/
+
 ## Astro
 
 This project uses [Astro](https://astro.build/) for frontend static generation and API endpoints to implement backend logic
