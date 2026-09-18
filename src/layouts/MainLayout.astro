@@ -43,20 +43,20 @@
 
         <header class="bg-gray-900 pt-3">
             <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                <div class="flex h-16 items-center justify-between flex-wrap">
-                    <div class="flex-1 md:flex md:items-center md:gap-12">
+                <div class="flex h-16 items-center justify-between gap-3">
+                    <div class="shrink-0">
                         <a
                             class="block text-indigo-800"
                             href={getRelativeLocaleUrl(currentLang, "/")}
                         >
                             <span class="sr-only">Home</span>
-                            <img class="h-12" height="48px" src="/santeleco.jpg" alt="">
+                            <img class="h-10 w-auto max-w-[110px] object-contain" height="40" src="/santeleco.jpg" alt="San Teleco logo">
                         </a>
                     </div>
         
-                    <div class="flex w-full items-center justify-between md:flex md:items-center md:gap-12 md:w-auto">
+                    <div class="ml-auto flex items-center gap-2 md:gap-12">
                         <nav aria-label="Global" class="block">
-                            <ul class="flex items-center gap-4 text-sm">
+                            <ul class="flex items-center gap-2 text-sm">
                                 <li>
                                     <div class="flex items-center gap-1 rounded-full border border-gray-700 bg-gray-800/60 p-1">
                                         {Object.entries(languages).map(([code, label]) => (
@@ -76,7 +76,7 @@
                                         ))}
                                     </div>
                                 </li>
-                                <li>
+                                <li class="hidden md:block">
                                     <a
                                         class=" transition text-white hover:text-white/75"
                                         href={getRelativeLocaleUrl(currentLang, "faq")}
@@ -87,15 +87,13 @@
                             </ul>
                         </nav>
         
-                        <div class="flex items-center gap-4">
-                            <div class="sm:flex sm:gap-4">
-                                <a
-                                    class="rounded-md bg-indigo-600 px-5 py-2.5 text-sm font-medium text-white shadow-sm dark:hover:bg-indigo-700"
-                                    href={getRelativeLocaleUrl(currentLang, "reservar")}
-                                >
-                                    {t.reserve}
-                                </a>
-                            </div>
+                        <div class="flex items-center">
+                            <a
+                                class="rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm sm:px-5 sm:py-2.5 dark:hover:bg-indigo-700"
+                                href={getRelativeLocaleUrl(currentLang, "reservar")}
+                            >
+                                {t.reserve}
+                            </a>
                         </div>
                     </div>
                 </div>
